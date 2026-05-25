@@ -1,9 +1,11 @@
-import { useRef, useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-/* ── Project Data ── */
+gsap.registerPlugin(ScrollTrigger);
+
 const projects = [
   {
     name: '面搭子 (Mian Dazi)',
@@ -42,154 +44,110 @@ const projects = [
 /* ── 3D Flip Card ── */
 function FlipCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const [flipped, setFlipped] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(el, {
+        y: 80,
+        opacity: 0,
+        rotateX: 15,
+        duration: 1,
+        delay: index * 0.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+      });
+    });
+
+    return () => ctx.revert();
+  }, [index]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, rotateX: 15 }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.8, delay: index * 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-      className="group"
-      style={{ perspective: '1200px' }}
-    >
-      <motion.div
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-        onClick={() => setFlipped(!flipped)}
+    <div ref={cardRef} className="group" style={{ perspective: '1200px' }}>
+      <div
         className="relative cursor-pointer"
-        style={{ transformStyle: 'preserve-3d' }}
+        onClick={() => setFlipped(!flipped)}
+        style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0)', transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)' }}
       >
         {/* Front */}
-        <div
-          className="relative rounded-2xl overflow-hidden bg-[#0d0d0c] border border-[#fbf9f4]/8"
-          style={{ backfaceVisibility: 'hidden' }}
-        >
+        <div className="relative rounded-2xl overflow-hidden bg-[#111] border border-[#fbf9f8]/6" style={{ backfaceVisibility: 'hidden' }}>
           {/* Image */}
           <div className="relative aspect-[16/10] overflow-hidden">
-            <img
-              src={project.image}
-              alt={project.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0c] via-[#0d0d0c]/30 to-transparent" />
-
-            {/* Stats overlay */}
-            <div className="absolute top-4 right-4 flex gap-3">
+            <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/40 to-transparent" />
+            <div className="absolute top-4 right-4 flex gap-2">
               {Object.entries(project.stats).map(([key, val]) => (
-                <span
-                  key={key}
-                  className="px-3 py-1 rounded-full bg-[#0d0d0c]/60 backdrop-blur-sm text-xs font-mono-label text-[#ff7438] border border-[#ff7438]/20"
-                >
+                <span key={key} className="px-2.5 py-1 rounded-full bg-[#0a0a0a]/70 backdrop-blur-sm text-xs font-mono-label text-[#ff7438]/80 border border-[#ff7438]/15">
                   {val} {key}
                 </span>
               ))}
             </div>
           </div>
-
           {/* Content */}
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xl md:text-2xl font-medium text-[#fbf9f4] tracking-tight group-hover:text-[#ff7438] transition-colors duration-300">
-                {project.name}
-              </h3>
-              <span className="font-mono-label text-[#fbf9f4]/30 text-xs">
-                点击翻转
-              </span>
+          <div className="p-5 md:p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg md:text-xl font-medium text-[#fbf9f4] tracking-tight">{project.name}</h3>
+              <span className="font-mono-label text-[#fbf9f4]/20 text-xs">点击翻转</span>
             </div>
-            <p className="text-xs text-[#fbf9f4]/40 font-mono-label mb-3">
-              {project.role} · {project.time}
-            </p>
-            <p className="text-sm text-[#fbf9f4]/60 leading-relaxed">
-              {project.desc}
-            </p>
-
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-4">
+            <p className="text-xs text-[#fbf9f4]/35 font-mono-label mb-3">{project.role} · {project.time}</p>
+            <p className="text-sm text-[#fbf9f4]/50 leading-relaxed mb-4">{project.desc}</p>
+            <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 rounded-full text-xs font-mono-label border border-[#fbf9f4]/10 text-[#fbf9f4]/40"
-                >
-                  {tag}
-                </span>
+                <span key={tag} className="px-2.5 py-1 rounded-full text-xs font-mono-label border border-[#fbf9f4]/8 text-[#fbf9f4]/35">{tag}</span>
               ))}
             </div>
-
-            {/* Link */}
             {project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-2 mt-4 text-sm text-[#ff7438] hover:underline"
-              >
-                访问项目
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M6 4H12V10M12 4L4 12" />
-                </svg>
+              <a href={project.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#ff7438] hover:underline">
+                访问项目 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 4H12V10M12 4L4 12" /></svg>
               </a>
             )}
           </div>
         </div>
 
         {/* Back */}
-        <div
-          className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-[#ff7438]/10 to-[#0d0d0c] border border-[#ff7438]/20 p-6 md:p-8 flex flex-col justify-center"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-        >
-          <h4 className="text-lg font-medium text-[#ff7438] mb-4">技术亮点</h4>
+        <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-[#ff7438]/8 to-[#0a0a0a] border border-[#ff7438]/15 p-6 md:p-8 flex flex-col justify-center"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+          <h4 className="text-base font-medium text-[#ff7438] mb-5">技术亮点</h4>
           <ul className="space-y-3">
             {project.details.map((d, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={flipped ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.3, delay: 0.2 + i * 0.1 }}
-                className="text-sm text-[#fbf9f4]/70 flex items-start gap-2"
-              >
-                <span className="text-[#ff7438] mt-0.5 flex-shrink-0">▸</span>
+              <li key={i} className="text-sm text-[#fbf9f4]/60 flex items-start gap-2.5">
+                <span className="text-[#ff7438] mt-0.5 flex-shrink-0 text-xs">▸</span>
                 {d}
-              </motion.li>
+              </li>
             ))}
           </ul>
-          <p className="text-xs text-[#fbf9f4]/30 mt-6 font-mono-label">
-            点击返回正面
-          </p>
+          <p className="text-xs text-[#fbf9f4]/20 mt-6 font-mono-label">点击返回正面</p>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
-/* ── Particle System ── */
+/* ── Particles ── */
 function Particles() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const count = 60;
+  const count = 50;
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  const particles = useMemo(() => {
-    return [...Array(count)].map(() => ({
-      position: new THREE.Vector3(
-        (Math.random() - 0.5) * 12,
-        (Math.random() - 0.5) * 6,
-        (Math.random() - 0.5) * 4
-      ),
-      speed: 0.2 + Math.random() * 0.5,
+  const particles = useMemo(() =>
+    [...Array(count)].map(() => ({
+      position: new THREE.Vector3((Math.random() - 0.5) * 14, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 4),
+      speed: 0.15 + Math.random() * 0.4,
       phase: Math.random() * Math.PI * 2,
-    }));
-  }, []);
+    })), []);
 
   useFrame((state) => {
     if (!meshRef.current) return;
     const t = state.clock.elapsedTime;
-
     particles.forEach((p, i) => {
       dummy.position.copy(p.position);
-      dummy.position.y += Math.sin(t * p.speed + p.phase) * 0.3;
-      dummy.position.x += Math.cos(t * p.speed * 0.5 + p.phase) * 0.15;
-      const scale = 0.03 + Math.sin(t * 2 + p.phase) * 0.01;
-      dummy.scale.setScalar(scale);
+      dummy.position.y += Math.sin(t * p.speed + p.phase) * 0.25;
+      dummy.position.x += Math.cos(t * p.speed * 0.5 + p.phase) * 0.1;
+      dummy.scale.setScalar(0.025 + Math.sin(t * 2 + p.phase) * 0.008);
       dummy.updateMatrix();
       meshRef.current!.setMatrixAt(i, dummy.matrix);
     });
@@ -199,61 +157,51 @@ function Particles() {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
       <circleGeometry args={[1, 6]} />
-      <meshBasicMaterial color="#ff7438" transparent opacity={0.4} />
+      <meshBasicMaterial color="#ff7438" transparent opacity={0.3} />
     </instancedMesh>
   );
 }
 
-/* ── Main Section ── */
 export default function ProjectsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from('.proj-header > *', {
+        y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.proj-header', start: 'top 80%' },
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="projects" className="relative py-28 md:py-36 bg-[#0d0d0c] overflow-hidden">
-      {/* Particle Background */}
+    <section id="projects" ref={sectionRef} className="relative py-28 md:py-36 bg-[#0a0a0a] overflow-hidden">
+      {/* Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        <Canvas
-          camera={{ position: [0, 0, 6], fov: 60 }}
-          gl={{ alpha: true, antialias: true }}
-          style={{ background: 'transparent' }}
-        >
+        <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ alpha: true, antialias: true }} style={{ background: 'transparent' }}>
           <Particles />
         </Canvas>
       </div>
 
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#fbf9f4]/8 to-transparent" />
+
       <div className="relative z-10 section-container">
-        {/* Section Header */}
-        <div className="mb-16 md:mb-20">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-mono-label text-[#fbf9f4]/40 block mb-4"
-          >
-            [04] 项目展示
-          </motion.span>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="heading-section text-4xl md:text-5xl lg:text-6xl text-[#fbf9f4]"
-            >
-              Featured Works
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-[#fbf9f4]/40 text-sm"
-            >
-              点击卡片查看技术详情
-            </motion.p>
+        {/* Header */}
+        <div className="proj-header mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <span className="font-mono-label text-[#fbf9f4]/30 block mb-4">[04] 项目展示</span>
+            <h2 className="heading-section text-4xl md:text-5xl lg:text-6xl text-[#fbf9f4]">Featured Works</h2>
           </div>
+          <p className="text-[#fbf9f4]/30 text-sm">点击卡片查看技术详情</p>
         </div>
 
-        {/* Project Cards Grid */}
+        {/* Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {projects.map((project, i) => (
             <FlipCard key={project.name} project={project} index={i} />
