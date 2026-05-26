@@ -96,8 +96,8 @@ export default function MobileLayout() {
                   a.click();
                   document.body.removeChild(a);
                   window.URL.revokeObjectURL(url);
-                  if (typeof _hmt !== 'undefined') {
-                    _hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
+                  if (typeof (window as any)._hmt !== 'undefined') {
+                    (window as any)._hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
                   }
                 });
             }}
