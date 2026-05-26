@@ -209,6 +209,21 @@ export default function HeroSection() {
               </svg>
             </a>
           </MagneticButton>
+
+          <MagneticButton strength={0.3}>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm transition-all duration-300 hover:gap-4"
+              style={{ color: 'var(--accent)' }}
+            >
+              <span className="t-mono">下载简历</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M6 1V11M6 11L1 6M6 11L11 6" />
+              </svg>
+            </a>
+          </MagneticButton>
         </div>
       </div>
 

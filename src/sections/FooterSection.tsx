@@ -66,22 +66,43 @@ export default function FooterSection() {
             如果您对 AI 产品有任何想法，或想探讨合作的可能，欢迎随时联系。
           </p>
 
-          <MagneticButton strength={0.5}>
-            <a
-              href="mailto:xuefeng.work@foxmail.com"
-              className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"
-              style={{
-                background: 'var(--accent)',
-                color: '#fff',
-                borderRadius: '100px',
-              }}
-            >
-              <span className="t-mono" style={{ color: '#fff' }}>SEND EMAIL</span>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M1 7H13M13 7L7 1M13 7L7 13" />
-              </svg>
-            </a>
-          </MagneticButton>
+          <div className="flex flex-wrap items-center gap-4">
+            <MagneticButton strength={0.5}>
+              <a
+                href="mailto:xuefeng.work@foxmail.com"
+                className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"
+                style={{
+                  background: 'var(--accent)',
+                  color: '#fff',
+                  borderRadius: '100px',
+                }}
+              >
+                <span className="t-mono" style={{ color: '#fff' }}>SEND EMAIL</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M1 7H13M13 7L7 1M13 7L7 13" />
+                </svg>
+              </a>
+            </MagneticButton>
+
+            <MagneticButton strength={0.4}>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"
+                style={{
+                  border: '1px solid var(--line)',
+                  color: 'var(--fg)',
+                  borderRadius: '100px',
+                }}
+              >
+                <span className="t-mono">下载简历 (PDF)</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M7 1V13M7 13L1 7M7 13L13 7" />
+                </svg>
+              </a>
+            </MagneticButton>
+          </div>
         </div>
 
         {/* Links */}
