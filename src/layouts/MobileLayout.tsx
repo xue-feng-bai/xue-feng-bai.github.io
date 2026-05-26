@@ -96,6 +96,9 @@ export default function MobileLayout() {
                   a.click();
                   document.body.removeChild(a);
                   window.URL.revokeObjectURL(url);
+                  if (typeof gtag !== 'undefined') {
+                    gtag('event', 'download_resume', { event_category: 'engagement', event_label: 'resume_pdf' });
+                  }
                 });
             }}
             className="flex items-center justify-between py-4 border-b w-full text-left"
