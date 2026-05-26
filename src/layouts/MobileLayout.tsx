@@ -71,8 +71,8 @@ export default function MobileLayout() {
 
         {/* Contact buttons */}
         <div className="m-reveal flex flex-col gap-3">
-          <a href="tel:17647578342" className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
-            <span className="text-sm">17647578342</span>
+          <a href="tel:19271150203" className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
+            <span className="text-sm">19271150203</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1L14 8L3 15V1Z" /></svg>
           </a>
           <a href="mailto:xuefeng.work@foxmail.com" className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
@@ -225,7 +225,7 @@ export default function MobileLayout() {
         {/* Bottom links */}
         <div className="m-reveal space-y-4 pt-6 border-t" style={{ borderColor: 'var(--line)' }}>
           {[
-            { label: 'PHONE', value: '17647578342', href: 'tel:17647578342' },
+            { label: 'PHONE', value: '19271150203', href: 'tel:19271150203' },
             { label: 'EMAIL', value: 'xuefeng.work@foxmail.com', href: 'mailto:xuefeng.work@foxmail.com' },
             { label: 'GITHUB', value: 'github.com/xue-feng-bai', href: 'https://github.com/xue-feng-bai' },
           ].map((link) => (
