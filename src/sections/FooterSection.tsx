@@ -91,8 +91,8 @@ export default function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  if (typeof gtag !== 'undefined') {
-                    gtag('event', 'download_resume', { event_category: 'engagement', event_label: 'resume_pdf' });
+                  if (typeof _hmt !== 'undefined') {
+                    _hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
                   }
                 }}
                 className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"

@@ -215,8 +215,8 @@ export default function HeroSection() {
               href="/resume.pdf"
               download
               onClick={() => {
-                if (typeof gtag !== 'undefined') {
-                  gtag('event', 'download_resume', { event_category: 'engagement', event_label: 'resume_pdf' });
+                if (typeof _hmt !== 'undefined') {
+                  _hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
                 }
               }}
               className="inline-flex items-center gap-2 text-sm transition-all duration-300 hover:gap-4"
