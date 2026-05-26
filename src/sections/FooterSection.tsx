@@ -10,6 +10,7 @@ const links = [
   { label: 'EMAIL', value: 'xuefeng.work@foxmail.com', href: 'mailto:xuefeng.work@foxmail.com' },
   { label: 'GITHUB', value: 'github.com/xue-feng-bai', href: 'https://github.com/xue-feng-bai' },
   { label: 'PROJECT', value: 'miandazi.com', href: 'https://www.miandazi.com' },
+  { label: 'RESUME', value: '下载简历 (PDF)', href: '/resume.pdf' },
 ];
 
 export default function FooterSection() {
