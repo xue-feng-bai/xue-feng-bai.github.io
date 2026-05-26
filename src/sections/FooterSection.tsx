@@ -92,8 +92,8 @@ export default function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  if (typeof (window as any)._hmt !== 'undefined') {
-                    (window as any)._hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
+                  if (typeof (window as any).gtag !== 'undefined') {
+                    (window as any).gtag('event', 'download_resume', { event_category: 'engagement', event_label: 'resume_pdf' });
                   }
                 }}
                 className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"

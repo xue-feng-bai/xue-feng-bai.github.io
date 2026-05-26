@@ -100,8 +100,8 @@ export default function MobileLayout() {
                   a.click();
                   document.body.removeChild(a);
                   window.URL.revokeObjectURL(url);
-                  if (typeof (window as any)._hmt !== 'undefined') {
-                    (window as any)._hmt.push(['_trackEvent', 'engagement', 'download_resume', 'resume_pdf']);
+                  if (typeof (window as any).gtag !== 'undefined') {
+                    (window as any).gtag('event', 'download_resume', { event_category: 'engagement', event_label: 'resume_pdf' });
                   }
                 });
             }}
