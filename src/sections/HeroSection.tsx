@@ -165,7 +165,7 @@ export default function HeroSection() {
             { label: 'LOCATION', value: '上海' },
             { label: 'AGE', value: '27 岁' },
             { label: 'EDUCATION', value: '内蒙古大学' },
-            { label: 'STATUS', value: '求职中' },
+            { label: 'WECHAT', value: 'xue-feng' },
           ].map((item) => (
             <div key={item.label} className="hero-meta-item">
               <span className="t-mono block mb-1.5" style={{ color: 'var(--fg-muted)' }}>

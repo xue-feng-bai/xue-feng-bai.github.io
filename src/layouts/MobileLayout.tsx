@@ -75,6 +75,10 @@ export default function MobileLayout() {
             <span className="text-sm">19271150203</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1L14 8L3 15V1Z" /></svg>
           </a>
+          <div className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
+            <span className="text-sm">微信: xue-feng</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1L14 8L3 15V1Z" /></svg>
+          </div>
           <a href="mailto:xuefeng.work@foxmail.com" className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
             <span className="text-sm">xuefeng.work@foxmail.com</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1L14 8L3 15V1Z" /></svg>

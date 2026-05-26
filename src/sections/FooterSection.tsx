@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const links = [
   { label: 'PHONE', value: '19271150203', href: 'tel:19271150203' },
+  { label: 'WECHAT', value: 'xue-feng', href: '#' },
   { label: 'EMAIL', value: 'xuefeng.work@foxmail.com', href: 'mailto:xuefeng.work@foxmail.com' },
   { label: 'GITHUB', value: 'github.com/xue-feng-bai', href: 'https://github.com/xue-feng-bai' },
   { label: 'PROJECT', value: 'miandazi.com', href: 'https://www.miandazi.com' },
