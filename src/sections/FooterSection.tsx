@@ -87,6 +87,7 @@ export default function FooterSection() {
             <MagneticButton strength={0.4}>
               <a
                 href="/resume.pdf"
+                download
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-10 py-5 text-sm transition-all duration-300"

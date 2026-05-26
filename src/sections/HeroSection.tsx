@@ -213,8 +213,7 @@ export default function HeroSection() {
           <MagneticButton strength={0.3}>
             <a
               href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+              download
               className="inline-flex items-center gap-2 text-sm transition-all duration-300 hover:gap-4"
               style={{ color: 'var(--accent)' }}
             >
