@@ -83,6 +83,10 @@ export default function MobileLayout() {
             <span className="text-sm">github.com/xue-feng-bai</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1L14 8L3 15V1Z" /></svg>
           </a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between py-4 border-b" style={{ borderColor: 'var(--line)' }}>
+            <span className="text-sm" style={{ color: 'var(--accent)' }}>下载简历 (PDF)</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 1V15M8 15L1 8M8 15L15 8" /></svg>
+          </a>
         </div>
       </section>
 
